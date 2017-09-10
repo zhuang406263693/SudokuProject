@@ -1,8 +1,10 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 using namespace std;
 class Sudo {
 public:
+	ofstream outfile;
 	int num;
 	int co = 0;
 	int da[9][9] = { 0 };
@@ -11,7 +13,11 @@ public:
 	bool judge(int row, int l, int z);
 	void output();
 	void dfs(int row, int z, int end);
+	void openFile();
 };
+void Sudo :: openFile() {
+	outfile.open("../BIN/sudoku.txt");
+}
 int Sudo::num_pic(int row, int l) {
 	if (row < 3)
 	{
@@ -70,11 +76,14 @@ void Sudo::output() {
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++) {
-			printf("%d ", da[i][j]);
+	//		printf("%d ", da[i][j]);
+			outfile <<da[i][j] <<" ";
 		}
-		printf("\n");
+	//	printf("\n");
+		outfile << endl;
 	}
-	printf("\n");
+	//printf("\n");
+	outfile << endl;
 }
 void Sudo::dfs(int row, int z, int end) {
 	if (row == 9)
@@ -87,6 +96,7 @@ void Sudo::dfs(int row, int z, int end) {
 			co++;
 			if (co == num)
 			{
+				outfile.close();
 				exit(0);
 			}
 			return;
